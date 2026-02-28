@@ -1,18 +1,30 @@
-// @ts-check
-import withNuxt from "./.nuxt/eslint.config.mjs";
+import js from "@eslint/js";
+import tseslint from "typescript-eslint";
+import pluginVue from "eslint-plugin-vue";
 
-export default withNuxt({
-  rules: {
-    "vue/html-self-closing": 0,
-    "vue/max-attributes-per-line": "off",
-    "vue/singleline-html-element-content-newline": "off",
-    "@stylistic/brace-style": "off",
-    "vue/operator-linebreak": "off",
-    "@stylistic/indent": "off",
-    "@stylistic/indent-binary-ops": "off",
-    "vue/html-indent": "off",
-    "@stylistic/operator-linebreak": "off",
-    "@stylistic/arrow-parens": "off",
-    "@stylistic/quote-props": "off",
+export default [
+  {
+    ignores: ["dist/**", "node_modules/**", "*.d.ts"],
   },
-});
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  ...pluginVue.configs["flat/recommended"],
+  {
+    files: ["**/*.vue"],
+    languageOptions: {
+      parserOptions: {
+        parser: tseslint.parser,
+      },
+    },
+    rules: {
+      "vue/multi-word-component-names": "off",
+      "vue/max-attributes-per-line": "off",
+    },
+  },
+  {
+    files: ["**/*.ts", "**/*.vue"],
+    rules: {
+      "@typescript-eslint/no-unused-vars": "warn",
+    },
+  },
+];
