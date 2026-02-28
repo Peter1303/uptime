@@ -1,8 +1,8 @@
-English | [简体中文](./README.zh-CN.md)
+简体中文 | [English](./README.md)
 
 <div align="center">
-<h1>site-status</h1>
-<p>An online status panel based on UptimeRobot API</p>
+<h1>Uptime</h1>
+<p>一个基于 UptimeKuma API 的在线状态面板</p>
 <br />
 <img src="https://img.shields.io/github/last-commit/imsyy/site-status" alt="last commit"/>
 <img src="https://img.shields.io/github/languages/code-size/imsyy/site-status" alt="code size"/>
@@ -17,63 +17,53 @@ English | [简体中文](./README.zh-CN.md)
 
 > Demo password: `123456`
 
-- [IMSYY-Site Monitoring](https://status.imsyy.top/)
+- [IMSYY-站点监测](https://status.imsyy.top/)
 
-## 🎉 Features
+## 🎉 特色
 
-- 🌍 Multi-platform deployment support
-- ✨ Elegant and smooth browsing experience
-- 🔐 Supports site password encryption (JWT + Hash)
-- 👀 Overall site status preview
-- ⏲️ Data auto-refresh
-- 📱 Mobile-friendly design
+- 🌍 多平台部署支持
+- ✨ 优雅且流畅的浏览体验
+- 👀 全站状态预览
+- ⏲️ 数据定时刷新
+- 📱 移动端适配
 
-## Prerequisites
+## 事先准备
 
-- You need to first add site monitors on [UptimeRobot](https://uptimerobot.com/dashboard) and get the
-  `Read-Only API Key` from the `My Settings` or [API Management](https://dashboard.uptimerobot.com/integrations) page (
-  Do not use the `Main API key`).
-- You can also use `Monitor-specific API keys` for individual monitors.
+- 您需要先到 `UptimeKuma` 添加站点监控
 
-## Deployment
+### 环境变量
 
-### Cloudflare
+新建 `env.prod`
+```
+# 站点配置
+VITE_SITE_TITLE='服务监测状态'
+VITE_SITE_DESCRIPTION=一个简约的站点监测
+VITE_SITE_KEYWORDS=站点监测,监测,监控
+VITE_SITE_LOGO=/favicon.ico
+VITE_SITE_ICP=
+VITE_COUNT_DAYS=60
+VITE_SHOW_LINK=true
+VITE_GITHUB_LINK=https://github.com/Peter1303/uptime
 
-This project is deployed by default using [Cloudflare Pages](https://pages.cloudflare.com/).
+# UptimeKuma API 配置 修改这里
+VITE_API_URL=https://localhost:3001/api
+# 状态页默认 slug
+VITE_STATUS_PAGE_SLUG=mp
+```
 
-- `star` and `fork` this project 😘
-- You can use the new [NuxtHub](https://hub.nuxt.com/) to quickly deploy this project. If you have experience deploying
-  on Vercel, the process is quite similar. Alternatively, you can use [Cloudflare Pages](https://pages.cloudflare.com/)
-  for deployment.
-- Before moving on, make sure to configure the environment variables as detailed in the `.env.example` file. The
-  `API_KEY` is a required field.
-- If everything goes smoothly, you should be able to see the project’s main page.
+获取 `UptimeKuma` 的状态页地址 `/status/` 后面部分即 `<slug>`
 
-### Vercel
+### 编译项目
+执行命令
+```bash
+npm run build
+```
+或者
+```bash
+vite build --mode prod
+```
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/imsyy/site-status)
-
-- Click the button above to deploy.
-- Add the following environment variables (important):
-
-  | **Variable Name**   | **Value** |
-        | ------------------- | --------- |
-  | DEPLOYMENT_PLATFORM | auto      |
-  | API_KEY             |           |
-
-- All set!
-
-### Other Hosting Platforms
-
-For deployment guides, refer to the official documentation: [Deploying Nuxt Apps](https://nuxtjs.org.cn/deploy)
-
-## Q & A
-
-### How to Enable Site Encryption
-
-Add the following environment variables: `SITE_PASSWORD` and `SITE_SECRET_KEY`. Both are required. The `SITE_PASSWORD`
-is the site password, and the `SITE_SECRET_KEY` is the encryption key, which you can choose freely.
-
-## Thanks
-
-- [uptime-status](https://github.com/yb/uptime-status) inspired this project
+部署并打开网址
+```
+http://<your-domain>/?s=<slug>
+```
